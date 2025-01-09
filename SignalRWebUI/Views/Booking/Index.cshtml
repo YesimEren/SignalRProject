@@ -1,13 +1,13 @@
-﻿@model List<ResultBookingDto>
+﻿@model List<SignalRWebUI.Dtos.BookingDtos.ResultBookingDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/AdminLayout/Index.cshtml";
     int count = 0;
 }
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
 
 <div class="content">
 	<div class="container-fluid">
@@ -16,7 +16,7 @@
 
 			$(document).ready(() => {
 
-				var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7186/SignalRHub").build();
+				var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5014/SignalRHub").build();
 				$("#connstatus").text(connection.state);
 				connection.start().then(() => {
 					$("#connstatus").text(connection.state);
@@ -49,8 +49,8 @@
 												<td>${item.phone}</td>
 												<td>${item.personCount}</td>
 												<td>${item.description}</td>
-												<td><a href="/Booking/DeleteBooking/${item.bookingID}" class="btn btn-outline-danger">Sil</a></td>
-												<td><a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-outline-success">Güncelle</a></td>
+															<td><a href="/Booking/DeleteBooking/${item.BookingID}" class="btn btn-outline-danger">Sil</a></td>
+												<td><a href="/Booking/UpdateBooking/${item.BookingID}" class="btn btn-outline-success">Güncelle</a></td>
 												<td><a href="/Booking/BookingStatusApproved/${item.bookingID}" class="btn btn-outline-info">Onayla</a></td>
 												<td><a href="/Booking/BookingStatusCancelled/${item.bookingID}" class="btn btn-outline-dark">İptal Et</a></td>
 												</tr>`

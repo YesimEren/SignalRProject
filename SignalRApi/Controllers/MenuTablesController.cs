@@ -30,9 +30,15 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateMenuTable(CreateMenuTableDto createMenuTableDto)
         {
-            createMenuTableDto.Status = false;
-            var value = _mapper.Map<MenuTable>(createMenuTableDto);
-            _menuTableService.TAdd(value);
+            var menutable = new MenuTable()
+            {
+                Name = createMenuTableDto.Name,
+                Status= createMenuTableDto.Status
+            };
+            _menuTableService.TAdd(menutable);
+            //createMenuTableDto.Status = false;
+            //var value = _mapper.Map<MenuTable>(createMenuTableDto);
+            //_menuTableService.TAdd(value);
             return Ok("Masa Başarılı Bir Şekilde Eklendi");
         }
 
@@ -48,9 +54,14 @@ namespace SignalRApi.Controllers
         [HttpPut]
         public ActionResult UpdateMenuTable(UpdateMenuTableDto updateMenuTableDto)
         {
-            var values = _mapper.Map<MenuTable>(updateMenuTableDto);
-            _menuTableService.TUpdate(values);
-            return Ok("Masa Bilgisi Güncellendi");
+            var menutable = new MenuTable()
+            {
+                MenuTableID = updateMenuTableDto.MenuTableID,
+                Name = updateMenuTableDto.Name,
+                Status = updateMenuTableDto.Status
+            };
+            _menuTableService.TUpdate(menutable);
+            return Ok();
         }
 
 

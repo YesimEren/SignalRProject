@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.DiscountDto;
-
-
+using SignalRWebUI.Dtos.DiscountDtos;
 
 namespace SignalRWebUI.ViewComponents.DefaultComponents
 {

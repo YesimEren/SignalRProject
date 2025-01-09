@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.BookingDto;
+using SignalRWebUI.Dtos.BookingDtos;
 using System.Text;
 
 namespace SignalRWebUI.Controllers
@@ -12,6 +12,7 @@ namespace SignalRWebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
+        
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
@@ -72,7 +73,7 @@ namespace SignalRWebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBookingDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("http://localhost:7186/api/Booking/", stringContent);
+            var responseMessage = await client.PutAsync("http://localhost:5014/api/Booking/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -82,14 +83,14 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> BookingStatusApproved(int id)
         {
 			var client = _httpClientFactory.CreateClient();
-			await client.GetAsync($"http://localhost:7186/api/Booking/BookingStatusApproved/{id}");
+			await client.GetAsync($"http://localhost:5014/api/Booking/BookingStatusApproved/{id}");
             return RedirectToAction("Index");
 		}
 
 		public async Task<IActionResult> BookingStatusCancelled(int id)
 		{
 			var client = _httpClientFactory.CreateClient();
-			await client.GetAsync($"http://localhost:7186/api/Booking/BookingStatusCancelled/{id}");
+			await client.GetAsync($"http://localhost:5014/api/Booking/BookingStatusCancelled/{id}");
 			return RedirectToAction("Index");
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.SocialMediaDto;
+using SignalRWebUI.Dtos.SocialMediaDtos;
 using System.Text;
 
 namespace SignalRWebUI.Controllers
@@ -29,7 +29,7 @@ namespace SignalRWebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateSocialMedia()
+        public  IActionResult CreateSocialMedia()
         {
             return View();
         }

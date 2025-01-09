@@ -1,6 +1,7 @@
-﻿@model List<ResultProductDto>
+﻿@model List<SignalRWebUI.Dtos.ProductDtos.ResultProductDto>
 @{
     Layout = null;
+
 }
 
 <!DOCTYPE html>
@@ -12,7 +13,6 @@
 
     @await Component.InvokeAsync("_MenuNavbarComponentPartial")
 
-
     <section class="food_section layout_padding">
         <div class="container">
             <div class="heading_container heading_center">
@@ -21,13 +21,13 @@
                 </h2>
             </div>
 
-            @*  @await Component.InvokeAsync("_MenuCategoryFilterComponentPartial")
-            *@
+            @await Component.InvokeAsync("_MenuCategoryFilterComponentPartial")
+            
             <div class="filters-content">
                 <div class="row grid">
                     @foreach (var item in Model)
                     {
-
+                       
                         <div class="col-sm-6 col-lg-4 @item.CategoryName">
                             <div class="box">
                                 <div>
@@ -45,7 +45,7 @@
                                             <h6>
                                                 @item.Price₺
                                             </h6>
-                                            <a href="#" onclick="showproductid(@item.ProductID)">
+                                            <a href="#" onclick="showproductid(@item.ProductID, @ViewBag.v)">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                                 <g>
                                                 <g>
@@ -117,23 +117,30 @@
     </section>
 
 
-    @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
+   @*  @await Component.InvokeAsync("_UILayoutFooterComponentPartial") *@
 
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
     <script>
-        function showproductid(value) { 
-         
-            var ProductID = value;
+
+        function showproductid(productId, menuTableId) {
             $.ajax({
-                type: 'post',
-                data: { item: ProductID },
-                contentType: 'json',
+                type: 'POST',
+                url: "/Menu/AddBasket",
+                data: {
+                    id: productId,
+                    menuTableId: menuTableId // MenuTableId burada gönderiliyor
+                },
                 success: function () {
-                    swal("Seçilen Ürün ID:" + id, "Seçiminizi Yaptınız!", "success");
+                    swal("Seçilen Ürün ID:" + productId, "Seçtiğiniz Ürün Sepete Eklendi!", "success");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hata:", error);
+                    console.log("Yanıt:", xhr.responseText);
                 }
             });
-        }
+        };
+
 
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

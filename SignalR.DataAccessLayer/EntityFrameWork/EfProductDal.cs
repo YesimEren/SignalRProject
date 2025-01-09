@@ -19,6 +19,13 @@ namespace SignalR.DataAccessLayer.EntityFramework
 
         }
 
+        public List<Product> GetLast9Products()
+        {
+            var context = new Context();
+            var values = context.Products.Take(9).ToList();
+            return values;
+        }
+
         public List<Product> GetProductsWithCategories()
         {
             var context = new Context();
@@ -76,17 +83,23 @@ namespace SignalR.DataAccessLayer.EntityFramework
 
         public decimal ProductPriceBySteakBurger()
         {
-            throw new NotImplementedException();
+           using var context=new Context();
+            return context.Products.Where(x => x.ProductName == "Steak Burger").Select(y=>y.Price).FirstOrDefault();
         }
 
         public decimal TotalPriceByDrinkCategory()
         {
-            throw new NotImplementedException();
+            using var context = new Context();
+            int id=context.Categories.Where(x=>x.CategoryName=="İçecek").Select(y=>y.CategoryID).FirstOrDefault();
+            return context.Products.Where(x => x.CategoryID == id).Sum(y => y.Price);
         }
 
         public decimal TotalPriceBySaladCategory()
         {
-            throw new NotImplementedException();
+            using var context = new Context();
+            int id= context.Categories.Where(x=>x.CategoryName== "Salata").Select(y=>y.CategoryID).FirstOrDefault();
+            return context.Products.Where(x=>x.CategoryID==id).Sum(y=>y.Price);
+
         }
     }
 }

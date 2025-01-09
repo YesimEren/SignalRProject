@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.CategoryDto;
-using SignalR.DtoLayer.ProductDto;
+using SignalRWebUI.Dtos.CategoryDtos;
+using SignalRWebUI.Dtos.ProductDtos;
 using System.Text;
 
 namespace SignalRWebUI.Controllers
@@ -106,6 +106,7 @@ namespace SignalRWebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
         {
+            updateProductDto.ProductStatus = true;
             var client = _httpClientFactory.CreateClient();
             var jsondata = JsonConvert.SerializeObject(updateProductDto);
             StringContent content = new StringContent(jsondata, Encoding.UTF8, "application/json");

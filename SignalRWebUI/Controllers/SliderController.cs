@@ -28,7 +28,13 @@ namespace SignalRWebUI.Controllers
             return View();
         }
 
-        [HttpPost]
+		[HttpGet]
+		public IActionResult CreateSlider()
+		{
+			return View();
+		}
+
+		[HttpPost]
 		public async Task<IActionResult> CreateSlider(CreateSliderDto createSliderDto)
         {
 			var client = _httpClientFactory.CreateClient();
@@ -47,18 +53,18 @@ namespace SignalRWebUI.Controllers
 		{
 			var client = _httpClientFactory.CreateClient();
 			var responsesmessage = await client.DeleteAsync($"http://localhost:5014/api/Slider/{id}");
-			return View();
+			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> UpdateSlider()
+		public async Task<IActionResult> UpdateSlider(int id)
 		{
 			var client = _httpClientFactory.CreateClient();
-			var responsesmmesage = await client.GetAsync("http://localhost:5014/api/Slider");
+			var responsesmmesage = await client.GetAsync($"http://localhost:5014/api/Slider/{id}");
 			if (responsesmmesage.IsSuccessStatusCode)
 			{
 				var jsondata = await responsesmmesage.Content.ReadAsStringAsync();
-				var values = JsonConvert.DeserializeObject<List<ResultSliderDto>>(jsondata);
+				var values = JsonConvert.DeserializeObject<UpdateSliderDto>(jsondata);
 				return View(values);
 			}
 

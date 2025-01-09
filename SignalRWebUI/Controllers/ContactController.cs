@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.ContactDto;
+using SignalRWebUI.Dtos.ContactDtos;
 using System.Text;
 
 namespace SignalRWebUI.Controllers
@@ -45,7 +45,7 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> DeleteContact(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"http://localhost:5014/api/Contact/{id}");
+            var responseMessage = await client.DeleteAsync($"http://localhost:5014/api/Contact?={id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

@@ -1,4 +1,4 @@
-﻿@model List<ResultContactDto>
+﻿@model List<SignalRWebUI.Dtos.ContactDtos.ResultContactDto>
 @foreach (var item in Model)
 {
     <footer class="footer_section">
@@ -39,7 +39,7 @@
                         <p>
                             @item.FooterDescription
                         </p>
-                      @*   @await Component.InvokeAsync("_UILayoutSocialMediaComponentPartial") *@
+                        @await Component.InvokeAsync("_UILayoutSocialMediaComponentPartial")
                     </div>
                 </div>
                 <div class="col-md-4 footer-col">

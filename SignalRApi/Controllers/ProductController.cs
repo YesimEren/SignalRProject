@@ -26,14 +26,14 @@ namespace SignalRApi.Controllers
         public IActionResult ProductGetList()
         {
             var values = _mapper.Map<List<ResultProductDto>>(_productService.TGetAllList());
-            
+
             return Ok(values);
         }
 
         [HttpGet("{id}")]
         public IActionResult ProductGet(int id)
         {
-            var values=_productService.TGetByID(id);
+            var values = _productService.TGetByID(id);
             return Ok(values);
         }
 
@@ -41,16 +41,16 @@ namespace SignalRApi.Controllers
         public IActionResult ProductListWithCategory()
         {
             var context = new Context();
-            var values=context.Products.Include(x=>x.Category).Select(y=>new ResultProductWithCategory
+            var values = context.Products.Include(x => x.Category).Select(y => new ResultProductWithCategory
             {
-                Description=y.Description,
-                ImageUrl=y.ImageUrl,
-                Price=y.Price,
-                ProductID=y.ProductID,
-                ProductName=y.ProductName,
-                ProductStatus=y.ProductStatus,
-                CategoryName=y.Category.CategoryName
-            
+                Description = y.Description,
+                ImageUrl = y.ImageUrl,
+                Price = y.Price,
+                ProductID = y.ProductID,
+                ProductName = y.ProductName,
+                ProductStatus = y.ProductStatus,
+                CategoryName = y.Category.CategoryName
+
             });
             return Ok(values.ToList());
         }
@@ -118,10 +118,18 @@ namespace SignalRApi.Controllers
         [HttpPut]
         public IActionResult UpdateProduct(UpdateProductDto updateProductDto)
         {
-            var values=_mapper.Map<Product>(updateProductDto);
+            var values = _mapper.Map<Product>(updateProductDto);
             _productService.TUpdate(values);
             return Ok("Ürün Bilgisi Güncellendi");
         }
 
-    }
+        [HttpGet("GetLast9Products")]
+        public IActionResult GetLast9Products()
+        {
+            var value=_productService.TGetLast9Products();
+            return Ok(value);
+        }
+
+
+	}
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalR.DtoLayer.CategoryDto;
+using SignalRWebUI.Dtos.CategoryDtos;
 
 namespace SignalRWebUI.ViewComponents.MenuComponents
 {
@@ -16,7 +16,7 @@ namespace SignalRWebUI.ViewComponents.MenuComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:5014/api/Category");
+            var responseMessage = await client.GetAsync("http://localhost:5014/api/Category");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
